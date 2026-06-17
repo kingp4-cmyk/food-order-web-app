@@ -1,0 +1,88 @@
+<!-- ==========================================================
+     RESTAURANT DETAIL PAGE
+     ==========================================================
+     Kullanıcı ana sayfada bir restorana bastığında bu sayfa açılır.
+
+     Bu sayfada:
+     - Restoran bilgileri gösterilir
+     - Restoranın menü ürünleri listelenir
+     - Kullanıcı yemekleri sepete ekleyebilir
+     - Sepete ekledikten sonra aynı restoran sayfasında kalır
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ restaurant.RestaurantName }} Menu</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>{{ restaurant.RestaurantName }}</h1>
+        <a href="/" class="back-link">← Back to Restaurants</a>
+    </div>
+
+    {% if added %}
+    <div class="card" style="border-left: 6px solid #27ae60;">
+        <h2>✅ Added to Cart</h2>
+        <p>The selected food item was added to your cart. You can continue adding more items from this restaurant.</p>
+        <a href="/cart" class="order-link">Go to Cart / Checkout</a>
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h2>Restaurant Information</h2>
+        <p><strong>Address:</strong> {{ restaurant.Address }}</p>
+        <p><strong>Phone:</strong> {{ restaurant.Phone }}</p>
+        <p><strong>Rating:</strong> ⭐ {{ restaurant.Rating }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Menu</h2>
+        <p>Select the foods you want and add them to your cart. Your order will be created only after checkout.</p>
+
+        <div class="menu-items-grid">
+            {% for item in menu_items %}
+            <div class="food-card">
+                <div class="food-image">
+                    🍱
+                </div>
+
+                <div class="food-content">
+                    <h3>{{ item.ItemName }}</h3>
+                    <p>{{ restaurant.RestaurantName }}</p>
+                    <strong>{{ item.Price }} TL</strong>
+
+                    <form action="/add_to_cart" method="POST">
+                        <input type="hidden" name="restaurant_id" value="{{ restaurant.RestaurantID }}">
+                        <input type="hidden" name="restaurant_name" value="{{ restaurant.RestaurantName }}">
+                        <input type="hidden" name="item_id" value="{{ item.ItemID }}">
+                        <input type="hidden" name="item_name" value="{{ item.ItemName }}">
+                        <input type="hidden" name="price" value="{{ item.Price }}">
+
+                        <label>Quantity</label>
+                        <input type="number" name="quantity" min="1" value="1" required>
+
+                        <button type="submit">Add to Cart</button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Ready to Order?</h2>
+        <p>After adding all desired foods to your cart, continue to checkout.</p>
+        <a href="/cart" class="order-link">Go to Cart / Checkout</a>
+    </div>
+
+</div>
+
+</body>
+</html>

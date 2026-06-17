@@ -1,0 +1,175 @@
+<!-- ==========================================================
+     PERSON 2 - RESTAURANTS & MENU PAGE
+     ==========================================================
+     Bu sayfa 2. kişinin sorumlu olduğu restoran ve menü işlemlerini içerir.
+
+     Bu sayfada yapılan işlemler:
+     - Restoran ekleme
+     - Restoran listeleme
+     - Kategori ekleme
+     - Kategori listeleme
+     - Menü ürünü ekleme
+     - Menü ürünlerini listeleme
+
+     Bağlı olduğu route dosyası:
+     routes/restaurant_menu_routes.py
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants & Menu</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Restaurants & Menu Management</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="card">
+        <h2>Add New Restaurant</h2>
+
+        <form action="/add_restaurant" method="POST">
+            <input type="text" name="restaurant_name" placeholder="Restaurant Name" required>
+            <input type="text" name="address" placeholder="Restaurant Address" required>
+            <input type="text" name="phone" placeholder="Restaurant Phone" required>
+            <input type="number" name="rating" placeholder="Rating 1.0 - 5.0" step="0.1" min="1" max="5" required>
+
+            <button type="submit">Add Restaurant</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Add New Category</h2>
+
+        <form action="/add_category" method="POST">
+            <input type="text" name="category_name" placeholder="Category Name" required>
+
+            <button type="submit">Add Category</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Add New Menu Item</h2>
+
+        <form action="/add_menu_item" method="POST">
+
+            <label>Restaurant</label>
+            <select name="restaurant_id" required>
+                <option value="">Select Restaurant</option>
+
+                {% for restaurant in restaurants %}
+                <option value="{{ restaurant.RestaurantID }}">
+                    {{ restaurant.RestaurantName }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <label>Category</label>
+            <select name="category_id" required>
+                <option value="">Select Category</option>
+
+                {% for category in categories %}
+                <option value="{{ category.CategoryID }}">
+                    {{ category.CategoryName }}
+                </option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="item_name" placeholder="Food Name" required>
+            <input type="number" name="price" placeholder="Price" step="0.01" min="0" required>
+
+            <label>Availability Status</label>
+            <select name="availability_status" required>
+                <option value="Available">Available</option>
+                <option value="Unavailable">Unavailable</option>
+            </select>
+
+            <button type="submit">Add Menu Item</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Restaurant List</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Restaurant</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Rating</th>
+                <th>Menu</th>
+            </tr>
+
+            {% for restaurant in restaurants %}
+            <tr>
+                <td>{{ restaurant.RestaurantID }}</td>
+                <td>{{ restaurant.RestaurantName }}</td>
+                <td>{{ restaurant.Address }}</td>
+                <td>{{ restaurant.Phone }}</td>
+                <td>⭐ {{ restaurant.Rating }}</td>
+                <td>
+                    <a href="/restaurant/{{ restaurant.RestaurantID }}" class="back-link">
+                        View Menu
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Category List</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Category Name</th>
+            </tr>
+
+            {% for category in categories %}
+            <tr>
+                <td>{{ category.CategoryID }}</td>
+                <td>{{ category.CategoryName }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Menu Item List</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Restaurant</th>
+                <th>Category</th>
+                <th>Food</th>
+                <th>Price</th>
+                <th>Status</th>
+            </tr>
+
+            {% for item in menu_items %}
+            <tr>
+                <td>{{ item.ItemID }}</td>
+                <td>{{ item.RestaurantName }}</td>
+                <td>{{ item.CategoryName }}</td>
+                <td>{{ item.ItemName }}</td>
+                <td>{{ item.Price }} TL</td>
+                <td>{{ item.AvailabilityStatus }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,793 @@
+/* ==========================================================
+   GLOBAL STYLE FILE - FOOD ORDER WEB APP
+   ==========================================================
+   Bu dosya web uygulamasının genel tasarımını içerir.
+
+   Bu dosyada şunlar düzenlenir:
+   - Sayfa arka planı
+   - Yazı tipi
+   - Ana sayfa kartları
+   - Form alanları
+   - Butonlar
+   - Tablolar
+   - Sayfa başlıkları
+
+   ÖNEMLİ:
+   - Bu dosya tüm HTML sayfaları tarafından ortak kullanılır.
+   - Yani burada yapılan değişiklikler bütün sayfaların tasarımını etkiler.
+   - Bu yüzden herkes rastgele değiştirmemelidir.
+   - Tasarım değişikliği yapılacaksa grup olarak karar verilmelidir.
+
+   Kullanıldığı yer:
+   HTML dosyalarında şu satır ile bağlanır:
+
+   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+   PHASE 3 DEMO PURPOSE:
+   This file helps the web app look organized and readable
+   during the final project demonstration.
+   ========================================================== */
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    margin: 0;
+    background-color: #f4f6f8;
+    color: #222;
+}
+
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 35px;
+}
+
+.menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.menu-card {
+    display: block;
+    text-decoration: none;
+    color: #222;
+    background-color: white;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
+}
+
+.menu-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.menu-card h2 {
+    margin-top: 0;
+    color: #d35400;
+}
+
+.menu-card p {
+    color: #555;
+}
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.back-link {
+    text-decoration: none;
+    color: #d35400;
+    font-weight: bold;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+input, select, button {
+    padding: 10px;
+    margin: 6px 0;
+    width: 100%;
+}
+
+button {
+    background-color: #d35400;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #b84300;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th, td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+th {
+    background-color: #f0f0f0;
+}
+
+/* ==========================================================
+   HOME PAGE - FOOD DELIVERY STYLE
+   ========================================================== */
+
+.top-navbar {
+    width: 100%;
+    height: 72px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7%;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.brand {
+    font-size: 28px;
+    font-weight: bold;
+    color: #d35400;
+}
+
+.location-box {
+    font-size: 15px;
+    color: #444;
+    background: #f5f5f5;
+    padding: 10px 18px;
+    border-radius: 24px;
+}
+
+.top-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.login-btn,
+.register-btn {
+    text-decoration: none;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.login-btn {
+    color: #d35400;
+    border: 1px solid #d35400;
+    background: white;
+}
+
+.register-btn {
+    color: white;
+    background: #d35400;
+}
+
+.hero-section {
+    background: linear-gradient(135deg, #fff3e8, #ffe0c2);
+    padding: 60px 7%;
+}
+
+.hero-text {
+    max-width: 780px;
+}
+
+.hero-text h1 {
+    text-align: left;
+    font-size: 46px;
+    margin-bottom: 12px;
+}
+
+.hero-text p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 28px;
+}
+
+.search-box input {
+    width: 100%;
+    max-width: 620px;
+    padding: 16px 20px;
+    border: none;
+    border-radius: 32px;
+    font-size: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+}
+
+.category-section,
+.restaurant-section,
+.menu-section {
+    margin-bottom: 42px;
+}
+
+.category-row {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.category-card {
+    background: white;
+    padding: 18px 24px;
+    border-radius: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.small-action {
+    color: #d35400;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.restaurant-grid,
+.menu-items-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+}
+
+.restaurant-card,
+.food-card {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: 0.2s;
+}
+
+.restaurant-card:hover,
+.food-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.restaurant-image,
+.food-image {
+    height: 120px;
+    background: #ffe0c2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 42px;
+}
+
+.restaurant-content,
+.food-content {
+    padding: 18px;
+}
+
+.restaurant-content h3,
+.food-content h3 {
+    margin-top: 0;
+    color: #222;
+}
+
+.restaurant-content p,
+.food-content p {
+    color: #555;
+}
+
+.restaurant-meta {
+    display: flex;
+    justify-content: space-between;
+    margin: 14px 0;
+    color: #555;
+}
+
+.order-link {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    background: #d35400;
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 12px;
+}
+
+@media (max-width: 900px) {
+    .restaurant-grid,
+    .menu-items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .top-navbar {
+        height: auto;
+        flex-direction: column;
+        gap: 12px;
+        padding: 18px;
+    }
+
+    .hero-text h1 {
+        font-size: 32px;
+    }
+}
+/* ==========================================================
+   ADDRESS MODAL
+   ========================================================== */
+
+.location-box {
+    border: none;
+    cursor: pointer;
+    font-size: 15px;
+    color: #444;
+    background: #f5f5f5;
+    padding: 10px 18px;
+    border-radius: 24px;
+    max-width: 360px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.location-box:hover {
+    background: #eeeeee;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-box {
+    width: 90%;
+    max-width: 430px;
+    background: white;
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2);
+}
+
+.modal-box h2 {
+    margin-top: 0;
+    color: #222;
+}
+
+.modal-box p {
+    color: #555;
+}
+
+.modal-close {
+    position: absolute;
+    right: 18px;
+    top: 14px;
+    width: auto;
+    background: transparent;
+    color: #222;
+    font-size: 28px;
+    padding: 0;
+}
+
+.modal-close:hover {
+    background: transparent;
+    color: #d35400;
+}
+
+.modal-save-btn {
+    margin-top: 10px;
+}
+
+/* ==========================================================
+   STAR RATING STYLE
+   ========================================================== */
+
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+    margin: 10px 0 16px 0;
+}
+
+.star-rating input {
+    display: none;
+}
+
+.star-rating label {
+    font-size: 36px;
+    color: #ccc;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.star-rating label:hover,
+.star-rating label:hover ~ label,
+.star-rating input:checked ~ label {
+    color: #f5b301;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 6px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+    resize: vertical;
+}
+
+textarea:disabled {
+    background-color: #f2f2f2;
+    cursor: not-allowed;
+}
+
+button:disabled {
+    background-color: #aaa;
+    cursor: not-allowed;
+}
+
+.warning-text {
+    color: #c0392b;
+    font-weight: bold;
+    margin: 8px 0;
+}
+
+/* ==========================================================
+   ADMIN PANEL STYLE
+   ========================================================== */
+
+.admin-icon {
+    position: fixed;
+    top: 90px;
+    right: 24px;
+    background-color: #007bff;
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+}
+
+.admin-icon:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.admin-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.admin-container h1 {
+    text-align: center;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.admin-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.admin-card {
+    background-color: white;
+    padding: 24px;
+    margin-bottom: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+}
+
+.admin-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #d35400;
+}
+
+.admin-card form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-card input,
+.admin-card select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 200px;
+    flex: 1;
+}
+
+.admin-card button {
+    width: auto;
+    padding: 12px 18px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-card button:hover {
+    background-color: #218838;
+}
+
+.delete-btn {
+    background-color: #dc3545 !important;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37 !important;
+}
+
+.admin-card table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.admin-card th,
+.admin-card td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-card th {
+    background-color: #f5f5f5;
+}
+
+.admin-card td form {
+    display: block;
+}
+
+.admin-card td button {
+    width: auto;
+}
+
+@media (max-width: 800px) {
+    .admin-card form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-card button {
+        width: 100%;
+    }
+
+    .admin-icon {
+        top: 80px;
+        right: 16px;
+    }
+}
+
+/* ==========================================================
+   ADMIN PANEL STYLE
+   ========================================================== */
+
+.admin-icon {
+    position: fixed;
+    top: 90px;
+    right: 24px;
+    background-color: #007bff;
+    color: white;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: bold;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+}
+
+.admin-icon:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.admin-container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+}
+
+.admin-container h1 {
+    text-align: center;
+    color: #222;
+    margin-bottom: 5px;
+}
+
+.admin-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 30px;
+}
+
+.admin-card {
+    background-color: white;
+    padding: 24px;
+    margin-bottom: 25px;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.10);
+}
+
+.admin-card h2 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    color: #d35400;
+}
+
+.admin-card form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.admin-card input,
+.admin-card select {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    min-width: 200px;
+    flex: 1;
+}
+
+.admin-card button {
+    width: auto;
+    padding: 12px 18px;
+    border: none;
+    background-color: #28a745;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.admin-card button:hover {
+    background-color: #218838;
+}
+
+.delete-btn {
+    background-color: #dc3545 !important;
+}
+
+.delete-btn:hover {
+    background-color: #b02a37 !important;
+}
+
+.admin-card table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.admin-card th,
+.admin-card td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.admin-card th {
+    background-color: #f5f5f5;
+}
+
+.admin-card td form {
+    display: block;
+}
+
+.admin-card td button {
+    width: auto;
+}
+
+@media (max-width: 800px) {
+    .admin-card form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-card button {
+        width: 100%;
+    }
+
+    .admin-icon {
+        top: 80px;
+        right: 16px;
+    }
+}
+
+/* ==========================================================
+   MY ORDERS PAGE STYLE
+   ========================================================== */
+
+.card table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.card table th,
+.card table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+.card table th {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.card table tr:hover {
+    background-color: #fafafa;
+}
+
+/* My Orders tablosu geniş olduğu için yatay kaydırma sağlar */
+.card {
+    overflow-x: auto;
+}
+
+/* Sipariş durumları daha okunur görünsün */
+.status-badge {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 14px;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #ffe0c2;
+    color: #d35400;
+}

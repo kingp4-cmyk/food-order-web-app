@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Courier Operations - Food Order</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <h1>Courier Operations</h1>
+    <p class="admin-subtitle">
+        After the customer places an order, we assign a courier and update the delivery status.
+    </p>
+
+    <!-- COURIER LIST -->
+    <div class="admin-card">
+        <h2>Courier List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Courier ID</th>
+                    <th>Courier Name</th>
+                    <th>Phone</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for courier in couriers %}
+                <tr>
+                    <td>{{ courier.CourierID }}</td>
+                    <td>{{ courier.CourierName }}</td>
+                    <td>{{ courier.Phone }}</td>
+                    <td>{{ courier.VehicleType }}</td>
+                    <td>{{ courier.AvailabilityStatus }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ASSIGN COURIER -->
+    <div class="admin-card">
+        <h2>Assign Courier to Order</h2>
+
+        <form action="{{ url_for('courier_operation.assign_courier') }}" method="POST">
+
+            <select name="order_id" required>
+                <option value="">Select Order</option>
+
+                {% for order in orders %}
+                    <option value="{{ order.OrderID }}">
+                        Order #{{ order.OrderID }} -
+                        {{ order.CustomerName }} -
+                        {{ order.RestaurantName }} -
+                        {{ order.TotalAmount }} TL -
+                        {{ order.OrderStatus }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="courier_id" required>
+                <option value="">Select Courier</option>
+
+                {% for courier in couriers %}
+                    <option value="{{ courier.CourierID }}">
+                        {{ courier.CourierName }} - {{ courier.AvailabilityStatus }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit">Assign Courier</button>
+        </form>
+    </div>
+
+    <!-- UPDATE ORDER STATUS -->
+    <div class="admin-card">
+        <h2>Update Order Status</h2>
+
+        <form action="{{ url_for('courier_operation.update_order_status') }}" method="POST">
+
+            <select name="order_id" required>
+                <option value="">Select Order</option>
+
+                {% for order in orders %}
+                    <option value="{{ order.OrderID }}">
+                        Order #{{ order.OrderID }} -
+                        {{ order.CustomerName }} -
+                        {{ order.OrderStatus }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="new_status" required>
+                <option value="">Select New Status</option>
+                <option value="On the Way">On the Way</option>
+                <option value="Delivered">Delivered</option>
+            </select>
+
+            <button type="submit">Update Status</button>
+        </form>
+    </div>
+
+    <!-- ORDER LIST -->
+    <div class="admin-card">
+        <h2>Order List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Restaurant</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>{{ order.OrderID }}</td>
+                    <td>{{ order.CustomerName }}</td>
+                    <td>{{ order.RestaurantName }}</td>
+                    <td>{{ order.TotalAmount }} TL</td>
+                    <td>{{ order.OrderStatus }}</td>
+                    <td>{{ order.OrderDate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- DELIVERY LIST -->
+    <div class="admin-card">
+        <h2>Delivery Assignment List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Delivery ID</th>
+                    <th>Order ID</th>
+                    <th>Courier</th>
+                    <th>Status</th>
+                    <th>Assigned Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for delivery in deliveries %}
+                <tr>
+                    <td>{{ delivery.DeliveryID }}</td>
+                    <td>{{ delivery.OrderID }}</td>
+                    <td>{{ delivery.CourierName }}</td>
+                    <td>{{ delivery.DeliveryStatus }}</td>
+                    <td>{{ delivery.AssignedTime }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/" class="back-link">Back to Home</a>
+
+</div>
+
+</body>
+</html>

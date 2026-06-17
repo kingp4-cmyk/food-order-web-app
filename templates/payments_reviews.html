@@ -1,0 +1,161 @@
+<!-- ==========================================================
+     PERSON 4 - REVIEWS PAGE
+     ==========================================================
+     Bu sayfa sadece yorum ve yıldız verme işlemlerini içerir.
+
+     Payment işlemi cart.html sayfasında yapılır.
+     Kullanıcı yıldız seçmeden yorum yapamaz.
+     Müşteri ve restoran bilgileri siparişten otomatik gelir.
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Reviews</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Restaurant Review</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    {% if selected_order %}
+    <div class="card">
+        <h2>Give Rating / Write Review</h2>
+
+        <p>
+            You are reviewing the restaurant for your completed order.
+            You must select a star rating before writing a review.
+        </p>
+
+        <div class="card">
+            <p><strong>Order ID:</strong> {{ selected_order.OrderID }}</p>
+            <p><strong>Customer:</strong> {{ selected_order.FirstName }} {{ selected_order.LastName }}</p>
+            <p><strong>Email:</strong> {{ selected_order.Email }}</p>
+            <p><strong>Restaurant:</strong> {{ selected_order.RestaurantName }}</p>
+        </div>
+
+        <form action="/add_review" method="POST" id="reviewForm">
+
+            <input type="hidden" name="order_id" value="{{ selected_order.OrderID }}">
+            <input type="hidden" name="customer_id" value="{{ selected_order.CustomerID }}">
+            <input type="hidden" name="restaurant_id" value="{{ selected_order.RestaurantID }}">
+
+            <label>Rating</label>
+
+            <div class="star-rating">
+                <input type="radio" id="star5" name="rating" value="5" required>
+                <label for="star5">★</label>
+
+                <input type="radio" id="star4" name="rating" value="4" required>
+                <label for="star4">★</label>
+
+                <input type="radio" id="star3" name="rating" value="3" required>
+                <label for="star3">★</label>
+
+                <input type="radio" id="star2" name="rating" value="2" required>
+                <label for="star2">★</label>
+
+                <input type="radio" id="star1" name="rating" value="1" required>
+                <label for="star1">★</label>
+            </div>
+
+            <p id="ratingWarning" class="warning-text">
+                Please select a star rating before writing a comment.
+            </p>
+
+            <textarea 
+                name="comment" 
+                id="commentBox"
+                placeholder="Write your review after selecting a rating..."
+                rows="4"
+                disabled
+                required></textarea>
+
+            <button type="submit" id="reviewSubmitBtn" disabled>
+                Submit Review
+            </button>
+        </form>
+    </div>
+    {% else %}
+    <div class="card">
+        <h2>No Order Selected</h2>
+        <p>
+            To write a review, please place an order first.
+            After the order is created, use the Give Rating / Write Review button on the order success page.
+        </p>
+
+        <a href="/" class="order-link">Go to Restaurants</a>
+    </div>
+    {% endif %}
+
+    <div class="card">
+        <h2>Review List</h2>
+
+        <table>
+            <tr>
+                <th>Review ID</th>
+                <th>Customer</th>
+                <th>Restaurant</th>
+                <th>Rating</th>
+                <th>Comment</th>
+                <th>Date</th>
+            </tr>
+
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review.ReviewID }}</td>
+                <td>{{ review.FirstName }} {{ review.LastName }}</td>
+                <td>{{ review.RestaurantName }}</td>
+                <td>
+                    {% for i in range(review.Rating) %}
+                    ⭐
+                    {% endfor %}
+                </td>
+                <td>{{ review.Comment }}</td>
+                <td>{{ review.ReviewDate }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+<script>
+    const ratingInputs = document.querySelectorAll("input[name='rating']");
+    const commentBox = document.getElementById("commentBox");
+    const reviewSubmitBtn = document.getElementById("reviewSubmitBtn");
+    const ratingWarning = document.getElementById("ratingWarning");
+
+    if (ratingInputs && commentBox && reviewSubmitBtn && ratingWarning) {
+        ratingInputs.forEach(input => {
+            input.addEventListener("change", function () {
+                commentBox.disabled = false;
+                reviewSubmitBtn.disabled = false;
+                ratingWarning.style.display = "none";
+                commentBox.placeholder = "Write your review...";
+                commentBox.focus();
+            });
+        });
+
+        document.getElementById("reviewForm").addEventListener("submit", function (event) {
+            const selectedRating = document.querySelector("input[name='rating']:checked");
+
+            if (!selectedRating) {
+                event.preventDefault();
+                ratingWarning.style.display = "block";
+                commentBox.disabled = true;
+                reviewSubmitBtn.disabled = true;
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!-- ==========================================================
+     PERSON 1 - ORDERS LIST PAGE
+     ==========================================================
+     Bu sayfa oluşturulan siparişleri listeler.
+     Sipariş oluşturma işlemi artık cart.html üzerinden yapılır.
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Orders</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Order List</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="card">
+        <h2>All Orders</h2>
+
+        <table>
+            <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Restaurant</th>
+                <th>Food</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Date</th>
+            </tr>
+
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.OrderID }}</td>
+                <td>{{ order.FirstName }} {{ order.LastName }}</td>
+                <td>{{ order.Phone }}</td>
+                <td>{{ order.Email }}</td>
+                <td>{{ order.CustomerAddress }}</td>
+                <td>{{ order.RestaurantName }}</td>
+                <td>{{ order.ItemName }}</td>
+                <td>{{ order.Quantity }}</td>
+                <td>{{ order.UnitPrice }} TL</td>
+                <td>{{ order.TotalAmount }} TL</td>
+                <td><strong>{{ order.OrderStatus }}</strong></td>
+                <td>{{ order.OrderDate }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

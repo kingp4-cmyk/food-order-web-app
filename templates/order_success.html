@@ -1,0 +1,102 @@
+<!-- ==========================================================
+     ORDER SUCCESS PAGE
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Success</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Order Status</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="card">
+        <h2>✅ Your order has been received.</h2>
+
+        <p><strong>Order ID:</strong> {{ order.OrderID }}</p>
+        <p><strong>Status:</strong> {{ order.OrderStatus }}</p>
+        <p><strong>Restaurant:</strong> {{ order.RestaurantName }}</p>
+        <p><strong>Customer:</strong> {{ order.FirstName }} {{ order.LastName }}</p>
+        <p><strong>Phone:</strong> {{ order.Phone }}</p>
+        <p><strong>Email:</strong> {{ order.Email }}</p>
+        <p><strong>Address:</strong> {{ order.CustomerAddress }}</p>
+        <p><strong>Total Amount:</strong> {{ order.TotalAmount }} TL</p>
+        <p><strong>Order Date:</strong> {{ order.OrderDate }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Payment Information</h2>
+
+        <p><strong>Payment Amount:</strong> {{ order.Amount }} TL</p>
+        <p><strong>Payment Method:</strong> {{ order.PaymentMethod }}</p>
+        <p><strong>Payment Status:</strong> {{ order.PaymentStatus }}</p>
+        <p><strong>Payment Date:</strong> {{ order.PaymentDate }}</p>
+    </div>
+
+    <div class="card">
+        <h2>Selected Courier Information</h2>
+
+        <p><strong>Courier:</strong> {{ order.CourierName }}</p>
+        <p><strong>Courier Phone:</strong> {{ order.CourierPhone }}</p>
+        <p><strong>Vehicle Type:</strong> {{ order.VehicleType }}</p>
+        <p><strong>Delivery Status:</strong> {{ order.DeliveryStatus }}</p>
+        <p><strong>Pickup Time:</strong> {{ order.PickupTime }}</p>
+        <p><strong>Delivery Time:</strong> {{ order.DeliveryTime }}</p>
+
+        <p>The delivery status will be updated by the admin.</p>
+    </div>
+
+    <div class="card">
+        <h2>Ordered Items</h2>
+
+        <table>
+            <tr>
+                <th>Food</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+                <th>Subtotal</th>
+            </tr>
+
+            {% for item in order_items %}
+            <tr>
+                <td>{{ item.ItemName }}</td>
+                <td>{{ item.Quantity }}</td>
+                <td>{{ item.UnitPrice }} TL</td>
+                <td>{{ item.Subtotal }} TL</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="card">
+        <h2>Review This Restaurant</h2>
+        <p>
+            You can give a star rating and write a review for this restaurant.
+            You cannot write a review without selecting a star rating.
+        </p>
+
+        <a 
+            href="/payments-reviews?order_id={{ order.OrderID }}" 
+            class="order-link">
+            Give Rating / Write Review
+        </a>
+    </div>
+
+    <div class="card">
+        <a href="/orders" class="order-link">View All Orders</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,297 @@
+HOW TO RUN - FOOD ORDER WEB APP
+
+Project Name:
+Local Food Ordering and Courier Management System
+
+Technologies Used:
+- Python
+- Flask
+- MySQL
+- HTML
+- CSS
+- MySQL Workbench
+
+--------------------------------------------------
+1. REQUIREMENTS
+--------------------------------------------------
+
+Before running the project, make sure these are installed:
+
+1. Python
+2. Flask
+3. MySQL Server
+4. MySQL Workbench
+5. mysql-connector-python
+
+If Flask or MySQL connector is not installed, run:
+
+pip install flask
+pip install mysql-connector-python
+
+On Mac, you may need to use:
+
+python3 -m pip install flask
+python3 -m pip install mysql-connector-python
+
+
+--------------------------------------------------
+2. DATABASE SETUP
+--------------------------------------------------
+
+1. Open MySQL Workbench.
+
+2. Open the SQL file of the project.
+
+3. Run the full SQL script.
+
+The script creates the database:
+
+food_order_db
+
+and creates these tables:
+
+- Customers
+- Restaurants
+- Categories
+- Couriers
+- MenuItems
+- Orders
+- OrderItems
+- Deliveries
+- Payments
+- Reviews
+
+It also inserts sample data for restaurants, menu items, customers, couriers, orders, payments and reviews.
+
+
+--------------------------------------------------
+3. DATABASE CONNECTION
+--------------------------------------------------
+
+Open db.py and check your MySQL information.
+
+Example:
+
+host = "localhost"
+user = "root"
+password = "YOUR_MYSQL_PASSWORD"
+database = "food_order_db"
+
+Important:
+Change YOUR_MYSQL_PASSWORD to your own MySQL password.
+
+Do not delete the database name:
+
+food_order_db
+
+
+--------------------------------------------------
+4. RUNNING THE PROJECT
+--------------------------------------------------
+
+Open Terminal.
+
+Go to the project folder.
+
+Example:
+
+cd Desktop/FoodOrderWebApp
+
+Then run:
+
+python3 app.py
+
+If you are using Windows, you can run:
+
+python app.py
+
+
+--------------------------------------------------
+5. OPENING THE WEBSITE
+--------------------------------------------------
+
+After running app.py, open your browser and go to:
+
+http://127.0.0.1:5000/
+
+This opens the home page of the food ordering website.
+
+
+--------------------------------------------------
+6. MAIN USER FLOW
+--------------------------------------------------
+
+1. Open the home page.
+2. Select a restaurant.
+3. View the restaurant menu.
+4. Add one or more food items to the cart.
+5. The user stays on the restaurant page after adding an item.
+6. After selecting all desired items, go to the cart.
+7. Enter customer information.
+8. Select payment method.
+9. Select a courier.
+10. Click Pay and Place Order.
+11. The order success page shows:
+   - Order information
+   - Payment information
+   - Selected courier information
+   - Ordered items
+
+
+--------------------------------------------------
+7. MY ORDERS PAGE
+--------------------------------------------------
+
+On the home page, click:
+
+My Orders
+
+This page shows:
+
+- Order ID
+- Customer name
+- Restaurant
+- Total amount
+- Order status
+- Courier name
+- Courier phone
+- Vehicle type
+- Delivery status
+- Payment status
+- Pickup time
+- Delivery time
+
+This allows the user to follow the order and courier status.
+
+
+--------------------------------------------------
+8. ADMIN PANEL
+--------------------------------------------------
+
+On the home page, click the blue admin icon.
+
+The Admin Panel includes:
+
+1. Add New Restaurant
+2. Restaurant List
+3. Add New Menu Item
+4. Update Food Price
+5. Delete Wrong Menu Item
+6. Add New Customer
+7. Customer List
+8. Courier List
+9. Update Courier Status
+10. Delivery Operation / Update Order Status
+
+Admin can update the delivery status as:
+
+- Kurye Bekleniyor
+- Yolda
+- Teslim Edildi
+
+When the status becomes "Teslim Edildi", the courier becomes available again.
+
+
+--------------------------------------------------
+9. CRUD OPERATIONS SHOWN IN THE PROJECT
+--------------------------------------------------
+
+CREATE:
+- Add new restaurant
+- Add new menu item
+- Add new customer
+- Place a new order
+
+READ:
+- View restaurants
+- View menu items
+- View customers
+- View orders
+- View courier status
+
+UPDATE:
+- Update food price
+- Update courier status
+- Update order / delivery status
+
+DELETE:
+- Delete wrong menu item
+
+
+--------------------------------------------------
+10. DEMO SCENARIO FOR PRESENTATION
+--------------------------------------------------
+
+1. Open the website.
+2. Select a restaurant.
+3. Add multiple food items to the cart.
+4. Go to cart.
+5. Enter customer and payment information.
+6. Select a courier, for example Ahmet Uçar.
+7. Place the order.
+8. Open My Orders and show the order and courier status.
+9. Open Admin Panel.
+10. Update the delivery status to "Yolda".
+11. Open My Orders again and show that the status changed.
+12. Go back to Admin Panel.
+13. Update the delivery status to "Teslim Edildi".
+14. Show that the courier becomes available again.
+
+
+--------------------------------------------------
+11. POSSIBLE ERRORS AND SOLUTIONS
+--------------------------------------------------
+
+Error:
+ModuleNotFoundError: No module named flask
+
+Solution:
+pip install flask
+
+
+Error:
+ModuleNotFoundError: No module named mysql.connector
+
+Solution:
+pip install mysql-connector-python
+
+
+Error:
+Access denied for user 'root'
+
+Solution:
+Check the MySQL password in db.py.
+
+
+Error:
+Unknown database 'food_order_db'
+
+Solution:
+Run the SQL script again in MySQL Workbench.
+
+
+Error:
+Table does not exist
+
+Solution:
+Make sure the full SQL script is executed successfully.
+
+
+Error:
+Port 5000 is already in use
+
+Solution:
+Stop the previous Flask server with CTRL + C and run again:
+
+python3 app.py
+
+
+--------------------------------------------------
+12. IMPORTANT NOTES
+--------------------------------------------------
+
+- The project must be run after MySQL Server is started.
+- The database name must be food_order_db.
+- The app.py file is the main file to run.
+- Do not change table names in SQL unless the Python code is also updated.
+- If the database is reset, previous orders will be deleted and sample data will be inserted again.

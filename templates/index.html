@@ -1,0 +1,191 @@
+<!-- ==========================================================
+     HOME PAGE - FOOD ORDER WEB APP
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Food Order Web App</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<!-- ADMIN PANEL BUTTON -->
+<a href="{{ url_for('admin.admin_panel') }}" class="admin-icon" title="Admin Panel">
+    ⚙
+</a>
+
+<header class="top-navbar">
+    <div class="brand">
+        FoodOrder
+    </div>
+
+    <button class="location-box" id="openAddressModal">
+        📍 <span id="selectedAddressText">Enter your delivery address</span>
+    </button>
+
+    <div class="top-actions">
+        <a href="/customers" class="login-btn">Sign In</a>
+        <a href="/my_orders" class="register-btn">My Orders</a>
+    </div>
+</header>
+
+<section class="hero-section">
+    <div class="hero-text">
+        <h1>Order food from local restaurants</h1>
+        <p>Choose a restaurant, view its menu, add food to cart and place your order easily.</p>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Search restaurant or food...">
+        </div>
+    </div>
+</section>
+
+<div class="container">
+
+    <section class="category-section">
+        <h2>Popular Food Categories</h2>
+
+        <div class="category-row">
+            <div class="category-card">🍔 Burger</div>
+            <div class="category-card">🍕 Pizza</div>
+            <div class="category-card">🥙 Kebab</div>
+            <div class="category-card">🍗 Chicken</div>
+            <div class="category-card">🥤 Drinks</div>
+        </div>
+    </section>
+
+    <section class="restaurant-section">
+        <div class="section-header">
+            <h2>Restaurants</h2>
+            <a href="/cart" class="small-action">Go to Cart →</a>
+        </div>
+
+        <div class="restaurant-grid" id="restaurantGrid">
+            {% for restaurant in restaurants %}
+            <div class="restaurant-card searchable-card">
+                <div class="restaurant-image">
+                    {% if restaurant.ImageURL %}
+                     <img 
+                        src="{{ url_for('static', filename=restaurant.ImageURL) }}" 
+                        alt="{{ restaurant.RestaurantName }}"
+                        class="card-image">
+                    {% else %}
+                        🍽️
+                    {% endif %}
+                </div>
+
+                <div class="restaurant-content">
+                    <h3>{{ restaurant.RestaurantName }}</h3>
+                    <p>{{ restaurant.Address }}</p>
+                    <p>Phone: {{ restaurant.Phone }}</p>
+
+                    <div class="restaurant-meta">
+                        <span>⭐ {{ restaurant.Rating }}</span>
+                        <span>30-45 min</span>
+                    </div>
+
+                    <a href="/restaurant/{{ restaurant.RestaurantID }}" class="order-link">
+                        View Menu
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section class="menu-section">
+        <div class="section-header">
+            <h2>Available Menu Items</h2>
+            <a href="/cart" class="small-action">Go to Cart →</a>
+        </div>
+
+        <div class="menu-items-grid" id="menuGrid">
+            {% for item in menu_items %}
+            <div class="food-card searchable-card">
+                <div class="food-image">
+                    🍱
+                </div>
+
+                <div class="food-content">
+                    <h3>{{ item.ItemName }}</h3>
+                    <p>{{ item.RestaurantName }}</p>
+                    <strong>{{ item.Price }} TL</strong>
+
+                    <a href="/restaurant/{{ item.RestaurantID }}" class="order-link">
+                        View Restaurant Menu
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+</div>
+
+<div class="modal-overlay" id="addressModal">
+    <div class="modal-box">
+        <button class="modal-close" id="closeAddressModal">×</button>
+
+        <h2>Delivery Address</h2>
+        <p>Please enter your delivery address to continue your order.</p>
+
+        <input type="text" id="addressInput" placeholder="Example: Alanya Merkez, Saray Mahallesi">
+
+        <button class="modal-save-btn" id="saveAddressBtn">Save Address</button>
+    </div>
+</div>
+
+<script>
+    const searchInput = document.getElementById("searchInput");
+    const searchableCards = document.querySelectorAll(".searchable-card");
+
+    searchInput.addEventListener("input", function () {
+        const searchText = this.value.toLowerCase();
+
+        searchableCards.forEach(card => {
+            const cardText = card.innerText.toLowerCase();
+
+            if (cardText.includes(searchText)) {
+                card.style.display = "block";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    });
+
+    const openAddressModal = document.getElementById("openAddressModal");
+    const closeAddressModal = document.getElementById("closeAddressModal");
+    const addressModal = document.getElementById("addressModal");
+    const saveAddressBtn = document.getElementById("saveAddressBtn");
+    const addressInput = document.getElementById("addressInput");
+    const selectedAddressText = document.getElementById("selectedAddressText");
+
+    openAddressModal.addEventListener("click", function () {
+        addressModal.style.display = "flex";
+    });
+
+    closeAddressModal.addEventListener("click", function () {
+        addressModal.style.display = "none";
+    });
+
+    saveAddressBtn.addEventListener("click", function () {
+        const addressValue = addressInput.value.trim();
+
+        if (addressValue !== "") {
+            selectedAddressText.textContent = addressValue;
+            addressModal.style.display = "none";
+        }
+    });
+
+    window.addEventListener("click", function (event) {
+        if (event.target === addressModal) {
+            addressModal.style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>

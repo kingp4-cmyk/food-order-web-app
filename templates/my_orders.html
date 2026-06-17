@@ -1,0 +1,151 @@
+<!-- ==========================================================
+     MY ORDERS PAGE
+     ==========================================================
+     Kullanıcı siparişlerini ve kurye durumunu görür.
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>My Orders</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="card">
+        <h2>Order and Courier Status</h2>
+
+        {% if orders %}
+
+        <div class="orders-table-wrapper">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Restaurant</th>
+                        <th>Total</th>
+                        <th>Order Status</th>
+                        <th>Courier</th>
+                        <th>Courier Phone</th>
+                        <th>Vehicle</th>
+                        <th>Delivery Status</th>
+                        <th>Payment Status</th>
+                        <th>Pickup Time</th>
+                        <th>Delivery Time</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td>#{{ order.OrderID }}</td>
+
+                        <td>
+                            {{ order.FirstName }} {{ order.LastName }}
+                        </td>
+
+                        <td>
+                            {{ order.RestaurantName }}
+                        </td>
+
+                        <td>
+                            {{ order.TotalAmount }} TL
+                        </td>
+
+                        <td>
+                            <span class="status-badge">
+                                {{ order.OrderStatus }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {% if order.CourierName %}
+                                <strong>{{ order.CourierName }}</strong>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.CourierPhone %}
+                                {{ order.CourierPhone }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.VehicleType %}
+                                {{ order.VehicleType }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.DeliveryStatus %}
+                                <span class="status-badge">
+                                    {{ order.DeliveryStatus }}
+                                </span>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.PaymentStatus %}
+                                {{ order.PaymentStatus }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.PickupTime %}
+                                {{ order.PickupTime }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if order.DeliveryTime %}
+                                {{ order.DeliveryTime }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        {% else %}
+
+        <p>No orders found.</p>
+
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <a href="/" class="back-link">← Continue Shopping</a>
+        <br><br>
+        <a href="/cart" class="order-link">Go to Cart</a>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!-- ==========================================================
+     PERSON 1 - CUSTOMERS PAGE
+     ==========================================================
+     Bu sayfa 1. kişinin sorumlu olduğu müşteri işlemlerini içerir.
+
+     Bu sayfada yapılan işlemler:
+     - Yeni müşteri ekleme
+     - Müşteri listeleme
+
+     Bağlı olduğu route dosyası:
+     routes/customer_order_routes.py
+     ========================================================== -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Customers</title>
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <div class="page-header">
+        <h1>Customers</h1>
+        <a href="/" class="back-link">← Back to Home</a>
+    </div>
+
+    <div class="card">
+        <h2>Add New Customer</h2>
+        <p>Enter customer information before creating an order.</p>
+
+        <form action="/add_customer" method="POST">
+            <input type="text" name="first_name" placeholder="First Name" required>
+            <input type="text" name="last_name" placeholder="Last Name" required>
+            <input type="text" name="phone" placeholder="Phone Number" required>
+            <input type="email" name="email" placeholder="Email Address" required>
+            <input type="text" name="address" placeholder="Address / Location" required>
+
+            <button type="submit">Add Customer</button>
+        </form>
+    </div>
+
+    <div class="card">
+        <h2>Customer List</h2>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Full Name</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Address / Location</th>
+                <th>Registration Date</th>
+            </tr>
+
+            {% for customer in customers %}
+            <tr>
+                <td>{{ customer.CustomerID }}</td>
+                <td>{{ customer.FirstName }} {{ customer.LastName }}</td>
+                <td>{{ customer.Phone }}</td>
+                <td>{{ customer.Email }}</td>
+                <td>{{ customer.Address }}</td>
+                <td>{{ customer.RegistrationDate }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Panel - Food Order</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+<div class="admin-container">
+
+    <h1>Admin Panel</h1>
+    <p class="admin-subtitle">
+        Restaurant, menu, customer, courier and delivery management page
+    </p>
+
+    <div class="admin-card">
+        <h2>Add New Restaurant</h2>
+
+        <form action="{{ url_for('admin.add_restaurant') }}" method="POST">
+            <input type="text" name="restaurant_name" placeholder="Restaurant name" required>
+            <input type="text" name="address" placeholder="Address" required>
+            <input type="text" name="phone" placeholder="Phone" required>
+
+            <button type="submit">Add Restaurant</button>
+        </form>
+    </div>
+
+    <div class="admin-card">
+        <h2>Restaurant List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Restaurant</th>
+                    <th>Address</th>
+                    <th>Phone</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for restaurant in restaurants %}
+                <tr>
+                    <td>{{ restaurant.RestaurantID }}</td>
+                    <td>{{ restaurant.RestaurantName }}</td>
+                    <td>{{ restaurant.Address }}</td>
+                    <td>{{ restaurant.Phone }}</td>
+                    <td>{{ restaurant.Rating }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-card">
+        <h2>Add New Menu Item</h2>
+
+        <form action="{{ url_for('admin.add_menu_item') }}" method="POST">
+
+            <select name="restaurant_id" required>
+                <option value="">Select Restaurant</option>
+
+                {% for restaurant in restaurants %}
+                    <option value="{{ restaurant.RestaurantID }}">
+                        {{ restaurant.RestaurantName }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="category_id" required>
+                <option value="">Select Category</option>
+
+                {% for category in categories %}
+                    <option value="{{ category.CategoryID }}">
+                        {{ category.CategoryName }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input type="text" name="item_name" placeholder="Food name" required>
+            <input type="number" step="0.01" name="price" placeholder="Price" required>
+
+            <button type="submit">Add Menu Item</button>
+        </form>
+    </div>
+
+    <div class="admin-card">
+        <h2>Update Food Price</h2>
+
+        <form action="{{ url_for('admin.update_price') }}" method="POST">
+
+            <select name="item_id" required>
+                <option value="">Select Menu Item</option>
+
+                {% for item in menu_items %}
+                    <option value="{{ item.ItemID }}">
+                        {{ item.RestaurantName }} - {{ item.ItemName }} - {{ item.Price }} TL
+                    </option>
+                {% endfor %}
+            </select>
+
+            <input type="number" step="0.01" name="new_price" placeholder="New price" required>
+
+            <button type="submit">Update Price</button>
+        </form>
+    </div>
+
+    <div class="admin-card">
+        <h2>Menu Item List / Delete Wrong Menu Item</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Restaurant</th>
+                    <th>Category</th>
+                    <th>Food</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for item in menu_items %}
+                <tr>
+                    <td>{{ item.RestaurantName }}</td>
+                    <td>{{ item.CategoryName }}</td>
+                    <td>{{ item.ItemName }}</td>
+                    <td>{{ item.Price }} TL</td>
+                    <td>{{ item.AvailabilityStatus }}</td>
+                    <td>
+                        <form action="{{ url_for('admin.delete_menu_item', item_id=item.ItemID) }}" method="POST">
+                            <button class="delete-btn" type="submit">
+                                Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-card">
+        <h2>Add New Customer</h2>
+
+        <form action="{{ url_for('admin.add_customer') }}" method="POST">
+            <input type="text" name="customer_name" placeholder="Customer full name" required>
+            <input type="text" name="phone" placeholder="Phone">
+            <input type="text" name="address" placeholder="Address">
+            <input type="email" name="email" placeholder="Email">
+
+            <button type="submit">Add Customer</button>
+        </form>
+    </div>
+
+    <div class="admin-card">
+        <h2>Customer List</h2>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>Registration Date</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.CustomerID }}</td>
+                    <td>{{ customer.FirstName }} {{ customer.LastName }}</td>
+                    <td>{{ customer.Phone }}</td>
+                    <td>{{ customer.Email }}</td>
+                    <td>{{ customer.Address }}</td>
+                    <td>{{ customer.RegistrationDate }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-card">
+        <h2>Courier List / Update Courier Status</h2>
+
+        <form action="{{ url_for('admin.update_courier_status') }}" method="POST">
+            <select name="courier_id" required>
+                <option value="">Select Courier</option>
+
+                {% for courier in couriers %}
+                    <option value="{{ courier.CourierID }}">
+                        {{ courier.FullName }} -
+                        {% if courier.IsActive %}
+                            Available
+                        {% else %}
+                            Busy
+                        {% endif %}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="is_active" required>
+                <option value="">Select Status</option>
+                <option value="1">Available</option>
+                <option value="0">Busy</option>
+            </select>
+
+            <button type="submit">Update Courier Status</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Courier</th>
+                    <th>Phone</th>
+                    <th>Vehicle</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for courier in couriers %}
+                <tr>
+                    <td>{{ courier.CourierID }}</td>
+                    <td>{{ courier.FullName }}</td>
+                    <td>{{ courier.Phone }}</td>
+                    <td>{{ courier.VehicleType }}</td>
+                    <td>
+                        {% if courier.IsActive %}
+                            Available
+                        {% else %}
+                            Busy
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="admin-card">
+        <h2>Delivery Operation / Update Order Status</h2>
+
+        <form action="{{ url_for('admin.admin_update_delivery_status') }}" method="POST">
+            <select name="order_id" required>
+                <option value="">Select Order</option>
+
+                {% for order in delivery_orders %}
+                    <option value="{{ order.OrderID }}">
+                        Order #{{ order.OrderID }} -
+                        {{ order.FirstName }} {{ order.LastName }} -
+                        Courier: {{ order.CourierName }} -
+                        Status: {{ order.OrderStatus }}
+                    </option>
+                {% endfor %}
+            </select>
+
+            <select name="new_status" required>
+                <option value="">Select New Status</option>
+                <option value="Kurye Bekleniyor">Kurye Bekleniyor</option>
+                <option value="Yolda">Yolda</option>
+                <option value="Teslim Edildi">Teslim Edildi</option>
+            </select>
+
+            <button type="submit">Update Delivery Status</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Customer</th>
+                    <th>Restaurant</th>
+                    <th>Courier</th>
+                    <th>Vehicle</th>
+                    <th>Order Status</th>
+                    <th>Delivery Status</th>
+                    <th>Total</th>
+                    <th>Pickup Time</th>
+                    <th>Delivery Time</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for order in delivery_orders %}
+                <tr>
+                    <td>{{ order.OrderID }}</td>
+                    <td>{{ order.FirstName }} {{ order.LastName }}</td>
+                    <td>{{ order.RestaurantName }}</td>
+                    <td>{{ order.CourierName }}</td>
+                    <td>{{ order.VehicleType }}</td>
+                    <td>{{ order.OrderStatus }}</td>
+                    <td>{{ order.DeliveryStatus }}</td>
+                    <td>{{ order.TotalAmount }} TL</td>
+                    <td>{{ order.PickupTime }}</td>
+                    <td>{{ order.DeliveryTime }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="/" class="back-link">Back to Home</a>
+
+</div>
+
+</body>
+</html>
